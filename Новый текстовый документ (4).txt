@@ -1,0 +1,7 @@
+hello , my dear  salesforce rockstar . I need you to create Weather widget for me . i want that whis widget can be palaced on any page  (f.r Homepage or Record page).
+The widget has to work with my location , but also I want to have the  possibility of choosing another city. Also , I want it to be a managed package.
+
+
+
+The widget has to work with "Link ". Without using any libraries , only https request-response from Apex.
+It's should be a Lightning widget and you can use any design from Google, bu it has to be Lightining desig . "Link" 
