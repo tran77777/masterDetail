@@ -53,11 +53,11 @@ sap.ui.define([
 				selectedItemsCount: 0
 			},
 			dialog: {
-				title: "daw",
+				title: "",
 				inputValue: "",
 				mode: "",
 				updatePath: "",
-				label: "awdawd",
+				label: "",
 				nameField: "",
 				idField: ""
 			}
