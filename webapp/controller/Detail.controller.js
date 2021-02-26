@@ -301,7 +301,7 @@ sap.ui.define([
 			this.getView().byId("page").addHeaderContent(this._oSmartFilterBar);
 		},
 		onActionPress: function(oEvent) {
-			debugger
+
 			var bUpdateMode = this.getModel("detailView").getProperty("/dialog/mode") === "update";
 			if (bUpdateMode) {
 
@@ -312,17 +312,16 @@ sap.ui.define([
 				var infoMB = this.getView().getModel("i18n").getResourceBundle().getText("statusSuccess");
 				var sStatusSuccessi18n = this.getView().getModel("i18n").getResourceBundle().getText("deletionSuccessful");
 				var sEntitySet = "/" + this._oSmartTable.getEntitySet();
-				var idField=this.getModel("detailView").getProperty("/dialog/idField");
+				var idField = this.getModel("detailView").getProperty("/dialog/idField");
 				var nameField = this.getModel("detailView").getProperty("/dialog/nameField");
 				var item = {
-					
-					
+
 					Version: "A",
 					Language: "RU"
 
 				}
-				
-				item[idField]="";
+
+				item[idField] = "";
 				item[nameField] = this.getModel("detailView").getProperty("/dialog/inputValue");
 				oModel.create(sEntitySet, item, {
 					success: function() {
@@ -355,7 +354,7 @@ sap.ui.define([
 		},
 
 		onPressCreateDialog: function(sPath, oEvent) {
-			debugger
+
 			var sPath = sPath;
 			this.getModel("detailView").setProperty("/dialog/inputValue", "")
 			var oView = this.getView();
@@ -393,10 +392,9 @@ sap.ui.define([
 		onSelectionChange: function() {
 			this.getModel("detailView").setProperty("/table/selectedItemsCount", this._oTable.getSelectedIndices().length);
 
-			debugger
 		},
 		onPressDeactivateDeleteButton: function(oEvent) {
-			debugger
+
 			if (this.getView().getModel("detailView").getProperty("/button/pressed/ChangeVersionMode")) {
 				this.PressdeleteRow();
 				return;
@@ -427,7 +425,7 @@ sap.ui.define([
 			MessageToast.show(this.getResourceBundle().getText("deletionSuccessful"));
 		},
 		onPressOnChangeSelectMode: function(oEvent) {
-			debugger
+
 			this.getView().getModel("detailView").setProperty("/table/selectionMode", oEvent.getParameter("pressed") ? "Multi" : "Single");
 		},
 		onPressToogleDeactiveMode: function(oEvent) {
