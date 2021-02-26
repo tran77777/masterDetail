@@ -49,12 +49,15 @@
 					<Collection>
 						<Record Type="UI.DataField">
 							<PropertyValue Property="Value" Path="GroupText"/>
+							<PropertyValue Property="Label" String="{@i18n&gt;labelGroupText}"/>
 						</Record>
 						<Record Type="UI.DataField">
 							<PropertyValue Property="Value" Path="Created"/>
+							<PropertyValue Property="Label" String="{@i18n&gt;labelCreated}"/>
 						</Record>
 						<Record Type="UI.DataField">
 							<PropertyValue Property="Value" Path="GroupID"/>
+							<PropertyValue Property="Label" String="{@i18n&gt;labelGroupID}"/>
 						</Record>
 					</Collection>
 				</Annotation>
@@ -64,15 +67,15 @@
 					<Collection>
 						<Record Type="UI.DataField">
 							<PropertyValue Property="Value" Path="SubGroupText"/>
+							<PropertyValue Property="Label" String="{@i18n&gt;labelSubGroupText}"/>
 						</Record>
 						<Record Type="UI.DataField">
 							<PropertyValue Property="Value" Path="Created"/>
+							<PropertyValue Property="Label" String="{@i18n&gt;labelCreated}"/>
 						</Record>
 						<Record Type="UI.DataField">
 							<PropertyValue Property="Value" Path="SubGroupID"/>
-						</Record>
-						<Record Type="UI.DataField">
-							<PropertyValue Property="Value" Path="Version"/>
+							<PropertyValue Property="Label" String="{@i18n&gt;labelSubGroupID}"/>
 						</Record>
 					</Collection>
 				</Annotation>
@@ -88,12 +91,15 @@
 					<Collection>
 						<Record Type="UI.DataField">
 							<PropertyValue Property="Value" Path="Created"/>
+							<PropertyValue Property="Label" String="{@i18n&gt;labelCreated}"/>
 						</Record>
 						<Record Type="UI.DataField">
 							<PropertyValue Property="Value" Path="PlantText"/>
+							<PropertyValue Property="Label" String="{@i18n&gt;labelPlanText}"/>
 						</Record>
 						<Record Type="UI.DataField">
 							<PropertyValue Property="Value" Path="RegionText"/>
+							<PropertyValue Property="Label" String="{@i18n&gt;labelRegionText}"/>
 						</Record>
 					</Collection>
 				</Annotation>
@@ -109,12 +115,15 @@
 					<Collection>
 						<Record Type="UI.DataField">
 							<PropertyValue Property="Value" Path="Created"/>
+							<PropertyValue Property="Label" String="{@i18n&gt;labelCreated}"/>
 						</Record>
 						<Record Type="UI.DataField">
 							<PropertyValue Property="Value" Path="RegionID"/>
+							<PropertyValue Property="Label" String="{@i18n&gt;labelRegionID}"/>
 						</Record>
 						<Record Type="UI.DataField">
 							<PropertyValue Property="Value" Path="RegionText"/>
+							<PropertyValue Property="Label" String="{@i18n&gt;labelRegionText}"/>
 						</Record>
 					</Collection>
 				</Annotation>
@@ -123,9 +132,11 @@
 						<PropertyPath>Created</PropertyPath>
 						<PropertyPath>RegionText</PropertyPath>
 					</Collection>
+					<Annotation Term="Common.Label" String="{@i18n&gt;labelRegionText}"/>
 				</Annotation>
 			</Annotations>
 			<Annotations Target="Metadata.zjblessons_base_SubGroupsType/SubGroupText">
+				<Annotation Term="Common.Label" String="{@i18n&gt;labelSubGroupText}"/>
 				<Annotation Term="Common.ValueList">
 					<Record Type="Common.ValueListType">
 						<PropertyValue Property="CollectionPath" String="zjblessons_base_SubGroups"/>
@@ -143,6 +154,27 @@
 						</PropertyValue>
 					</Record>
 				</Annotation>
+			</Annotations>
+			<Annotations Target="Metadata.zjblessons_base_SubGroupsType/Created">
+				<Annotation Term="Common.Label" String="{@i18n&gt;labelCreated}"/>
+			</Annotations>
+			<Annotations Target="Metadata.zjblessons_base_GroupsType/Created">
+				<Annotation Term="Common.Label" String="{@i18n&gt;labelCreated}"/>
+			</Annotations>
+			<Annotations Target="Metadata.zjblessons_base_GroupsType/GroupText">
+				<Annotation Term="Common.Label" String="{@i18n&gt;labelGroupText}"/>
+			</Annotations>
+			<Annotations Target="Metadata.zjblessons_base_PlantsType/Created">
+				<Annotation Term="Common.Label" String="{@i18n&gt;labelCreated}"/>
+			</Annotations>
+			<Annotations Target="Metadata.zjblessons_base_PlantsType/PlantText">
+				<Annotation Term="Common.Label" String="{@i18n&gt;labelPlanText}"/>
+			</Annotations>
+			<Annotations Target="Metadata.zjblessons_base_RegionsType/Created">
+				<Annotation Term="Common.Label" String="{@i18n&gt;labelCreated}"/>
+			</Annotations>
+			<Annotations Target="Metadata.zjblessons_base_RegionsType/RegionText">
+				<Annotation Term="Common.Label" String="{@i18n&gt;labelRegionText}"/>
 			</Annotations>
 		</Schema>
 	</edmx:DataServices>

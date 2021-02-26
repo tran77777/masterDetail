@@ -55,7 +55,11 @@ sap.ui.define([
 			dialog: {
 				title: "daw",
 				inputValue: "",
-				mode: ""
+				mode: "",
+				updatePath: "",
+				label: "awdawd",
+				nameField: "",
+				idField: ""
 			}
 		}),
 
@@ -113,6 +117,8 @@ sap.ui.define([
 			this.getModel().metadataLoaded().then(function() {
 				this.byId("thDetail").setText(this.getModel("i18n").getResourceBundle().getText("t" + sEntity));
 				this._loadTable(sEntity);
+				this.getModel("detailView").setProperty("/dialog/idField", this._oSmartTable.getEntitySet().slice(16, -1) + "ID");
+				this.getModel("detailView").setProperty("/dialog/nameField", this._oSmartTable.getEntitySet().slice(16, -1) + "Text");
 			}.bind(this));
 		},
 
@@ -294,55 +300,71 @@ sap.ui.define([
 			this.getView().byId("page").destroyHeaderContent();
 			this.getView().byId("page").addHeaderContent(this._oSmartFilterBar);
 		},
-		onActionPress: function() {
+		onActionPress: function(oEvent) {
 			debugger
+			var bUpdateMode = this.getModel("detailView").getProperty("/dialog/mode") === "update";
+			if (bUpdateMode) {
 
-			var oModel = this.getOwnerComponent().getModel();
-			var infoMB = this.getView().getModel("i18n").getResourceBundle().getText("infoMB");
-			var sStatusSuccessi18n = this.getView().getModel("i18n").getResourceBundle().getText("messageBoxSuccsess");
-			var item = {
-				GroupID: "",
+				this._onUpdate();
 
-				Version: "A",
-				Language: "RU",
-				GroupText: this.getModel("detailView").getProperty("/dialog/inputValue")
-			}
-			oModel.create("/zjblessons_base_Groups", item, {
-				success: function() {
-					sap.m.MessageBox.show(sStatusSuccessi18n, {
-						icon: sap.m.MessageBox.Icon.SUCCESS,
-						title: infoMB
-					});
+			} else {
+				var oModel = this.getOwnerComponent().getModel();
+				var infoMB = this.getView().getModel("i18n").getResourceBundle().getText("statusSuccess");
+				var sStatusSuccessi18n = this.getView().getModel("i18n").getResourceBundle().getText("deletionSuccessful");
+				var sEntitySet = "/" + this._oSmartTable.getEntitySet();
+				var idField=this.getModel("detailView").getProperty("/dialog/idField");
+				var nameField = this.getModel("detailView").getProperty("/dialog/nameField");
+				var item = {
+					
+					
+					Version: "A",
+					Language: "RU"
 
 				}
+				
+				item[idField]="";
+				item[nameField] = this.getModel("detailView").getProperty("/dialog/inputValue");
+				oModel.create(sEntitySet, item, {
+					success: function() {
+						sap.m.MessageBox.show(sStatusSuccessi18n, {
+							icon: sap.m.MessageBox.Icon.SUCCESS,
+							title: infoMB
+						});
 
-			});
+					}
 
-			this.onPressCancel();
+				});
 
+				this.onPressCancel();
+			}
 		},
 		onCreatePress: function() {
 			this.getModel("detailView").setProperty("/dialog/mode", "create");
 			this.onPressCreateDialog();
 		},
-		onUpdatePress: function() {
+		onUpdatePress: function(oEvent) {
 			this.getModel("detailView").setProperty("/dialog/mode", "update");
-			this.onPressCreateDialog();
+			var sPath = oEvent.getSource().getBindingContext().getPath();
+			this.getModel("detailView").setProperty("/dialog/updatePath", sPath);
+			this.onPressCreateDialog(sPath);
 		},
 		onPressCopy: function() {
 			this.getModel("detailView").setProperty("/dialog/mode", "copy");
-			this.onPressCreateDialog();
+			var sPath = this._oTable.getContextByIndex(this._oTable.getSelectedIndex()).getPath();
+			this.onPressCreateDialog(sPath);
 		},
-		
-		onPressCreateDialog: function(oEvent) {
+
+		onPressCreateDialog: function(sPath, oEvent) {
 			debugger
+			var sPath = sPath;
 			this.getModel("detailView").setProperty("/dialog/inputValue", "")
 			var oView = this.getView();
 			var sMode = this.getModel("detailView").getProperty("/dialog/mode");
-			if (sMode === "update" || sMode==="copy") {
-				var sPath = this._oTable.getContextByIndex(this._oTable.getSelectedIndex()).getPath();
-				var sGroupText = this.getView().getModel().getProperty(sPath).GroupText;
-				this.getModel("detailView").setProperty("/dialog/inputValue", sGroupText);
+			var nameField = this.getModel("detailView").getProperty("/dialog/nameField");
+			if (sMode === "update" || sMode === "copy") {
+
+				var sValueField = this.getView().getModel().getProperty(sPath)[nameField];
+				this.getModel("detailView").setProperty("/dialog/inputValue", sValueField);
 			}
 			sap.ui.core.Fragment.load({
 					id: oView.getId(),
@@ -353,6 +375,7 @@ sap.ui.define([
 
 					this.getView().addDependent(oDialog);
 					oDialog.setModel(this.getModel("detailView"));
+					this.getView().byId("label").setText(nameField);
 					this.getView().byId("input").bindProperty("value", {
 						path: "detailView>/dialog/inputValue"
 					});
@@ -390,7 +413,8 @@ sap.ui.define([
 
 						this.getModel().submitChanges({
 							success: () => {
-								MessageToast.show("msgSuccessRestore");
+								MessageToast.show(this.getResourceBundle().getText("deletionSuccessful"));
+								this._oTable.clearSelection();
 							}
 						});
 					}
@@ -400,7 +424,7 @@ sap.ui.define([
 		},
 		onRefreshTable: function() {
 			this._oSmartTable.rebindTable(true);
-			MessageToast.show("msg");
+			MessageToast.show(this.getResourceBundle().getText("deletionSuccessful"));
 		},
 		onPressOnChangeSelectMode: function(oEvent) {
 			debugger
@@ -418,33 +442,22 @@ sap.ui.define([
 				oEvent.getParameter("bindingParams").filters.push(oFilter);
 			}
 		},
-		_onUpdate: function(oEvent) {
-			debugger
-			var sContextPath = oEvent.getSource().getBindingContext().getPath();
-			sap.ui.core.Fragment.load({
-					name: "MySecondProject.MySecondProject.view.EditGroup",
-					controller: this
-				})
-				.then(oDialog => {
-					// oDialog.getBeginButton().attachPress(this.onPressLogin.bind(this, oDialog, oEntity, resolve));
-					// oDialog.getEndButton().attachPress(this.onPressCancelLogin.bind(this, oDialog, resolve));
-					this.getView().addDependent(oDialog);
-					oDialog.setModel(this.getModel());
-					oDialog.bindObject(sContextPath);
-					oDialog.open();
-					this._oDialog = oDialog;
-				});
-		},
+
 		onPressCancel: function(oEvent) {
 			this._oDialog.destroy();
 			this._oDialog = null;
 		},
-		onPressOKCreate: function(oEvent) {
+		_onUpdate: function(oEvent) {
+			var sPath = this.getModel("detailView").getProperty("/dialog/updatePath");
+			var nameField = this.getModel("detailView").getProperty("/dialog/nameField");
+			var sI18nStatusAcionSuccess = this.getResourceBundle().getText("messageBoxUpdateSuccess")
+			var sInputValue = this.getView().getModel("detailView").getProperty("/dialog/inputValue");
+			this.getModel().setProperty(sPath + "/" + nameField, sInputValue)
 			this.getModel().submitChanges({
 
 				success: function(oData) {
 
-					sap.m.MessageToast.show("awdawd");
+					sap.m.MessageToast.show(sI18nStatusAcionSuccess);
 
 				},
 
@@ -472,14 +485,15 @@ sap.ui.define([
 
 				}.bind(this));
 				Promise.all(aPromise).then(function(aData) {
+					this._oTable.clearSelection();
 					sap.m.MessageBox.show(sdeletionSuccessfulStatus, {
 						icon: sap.m.MessageBox.Icon.SUCCESS,
-						title: "Success!"
+						title: this.getResourceBundle().getText("statusSuccess")
 					});
 				}).catch(function() {
 					sap.m.MessageBox.show(sdeletionSuccessfulStatus, {
-						icon: sap.m.MessageBox.Icon.ERROR,
-						title: "Failed!"
+						icon: sap.m.MessageBox.Icon.SUCCESS,
+						title: this.getResourceBundle().getText("statusSuccess")
 					});
 				});
 

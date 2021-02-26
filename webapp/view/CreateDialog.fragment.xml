@@ -1,7 +1,7 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
-	<Dialog id="createDialog" title="{dialog>/title}">
+	<Dialog id="createDialog" title="">
 		<VBox class="sapUiResponsiveMargin">
-			<Label text="{i18n>labelGroupID}" labelFor="Language" design="Bold"/>
+			<Label id="label"  labelFor="" design="Bold"/>
 			<Input  id="input" value="{detailView>/dialog/inputValue}"/>
 		
 		
