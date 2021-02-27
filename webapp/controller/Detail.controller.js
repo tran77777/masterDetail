@@ -20,8 +20,6 @@ sap.ui.define([
 	OverflowToolbarButton, OverflowToolbarToggleButton, ObjectStatus, Button, Filter, FilterOperator, Fragment, MessageBox) {
 	"use strict";
 
-	// shortcut for sap.m.URLHelper
-
 	return BaseController.extend("MySecondProject.MySecondProject.controller.Detail", {
 
 		formatter: formatter,
@@ -68,13 +66,6 @@ sap.ui.define([
 		/* =========================================================== */
 
 		onInit: function() {
-			// Model used to manipulate control states. The chosen values make sure,
-			// detail page is busy indication immediately so there is no break in
-			// between the busy indication for loading the view's meta data
-			// var oViewModel = new JSONModel({
-			// 	busy: false,
-			// 	delay: 0
-			// });
 
 			this.getRouter().getRoute("object").attachPatternMatched(this._onObjectMatched, this);
 
@@ -147,7 +138,7 @@ sap.ui.define([
 					type: "Default",
 					icon: "{i18n>iChangeSelectionMode}",
 					visible: "{detailView>/button/visible/ChangeSelectionMode}",
-					//press: this.catalog.onChangeSelectionMode.bind(this),
+
 					pressed: "{detailView>/button/pressed/ChangeSelectionMode}",
 					press: this.onPressOnChangeSelectMode.bind(this)
 				}),
@@ -155,7 +146,7 @@ sap.ui.define([
 					text: "{i18n>infSelectedItems} {detailView>/table/selectedItemsCount}",
 					tooltip: "{i18n>ttResetSelections}",
 					type: "Default",
-					//press: this.catalog.onResetSelections.bind(this),
+
 					enabled: true,
 					visible: "{= ( (${detailView>/table/selectedItemsCount} > 0) && (${detailView>/table/selectionMode} === 'MultiToggle' ) ) }",
 					iconFirst: false
@@ -169,7 +160,6 @@ sap.ui.define([
 					pressed: "{detailView>/button/pressed/ChangeVersionMode}",
 					press: this.onPressToogleDeactiveMode.bind(this)
 
-					//press: this.catalog.onChangeVersionMode.bind(this)
 				}),
 				new ObjectStatus({
 					text: "{i18n>infDeactivatedModeOn}",
@@ -179,56 +169,56 @@ sap.ui.define([
 				}),
 				new ToolbarSpacer(),
 				new OverflowToolbarButton({
-					//id: "btnCreate",
+
 					icon: "{i18n>iCreate}",
 					type: "Default",
 					tooltip: "{i18n>ttCreate}",
 					text: "{i18n>ttCreate}",
-					//press: this.catalog.onCreate.bind(this),
+
 					visible: "{detailView>/button/visible/Create}",
 					enabled: "{= !${detailView>/button/pressed/ChangeVersionMode} }",
 					press: this.onCreatePress.bind(this)
 
 				}),
 				new OverflowToolbarButton({
-					//id: "btnCopy",
+
 					icon: "{i18n>iCopy}",
 					type: "Default",
 					tooltip: "{i18n>ttCopy}",
 					text: "{i18n>ttCopy}",
-					//press: this.catalog.onCopy.bind(this),
+
 					visible: "{detailView>/button/visible/Copy}",
 					enabled: "{= (${detailView>/table/selectedItemsCount} === 1) && !${detailView>/button/pressed/ChangeVersionMode} }",
 					press: this.onPressCopy.bind(this)
 				}),
 				new OverflowToolbarButton({
-					//id: "btnRefresh",
+
 					icon: "{i18n>iRefresh}",
 					type: "Default",
 					tooltip: "{i18n>ttRefresh}",
-					//press: this.catalog.onRefresh.bind(this),
+
 					text: "{i18n>ttRefresh}",
 					visible: "{detailView>/button/visible/Refresh}",
 					press: this.onRefreshTable.bind(this)
 				}),
 				new OverflowToolbarButton({
-					//id: "btnDeactivateDelete",
+
 					text: "{= (${detailView>/button/pressed/ChangeVersionMode}) ? ${i18n>ttDelete} : ${i18n>ttDeactivate}}",
 					tooltip: "{= (${detailView>/button/pressed/ChangeVersionMode}) ? ${i18n>ttDelete} : ${i18n>ttDeactivate}}",
 					icon: "{= (${detailView>/button/pressed/ChangeVersionMode}) ? ${i18n>iDelete} : ${i18n>iDeactivate}}",
 					visible: "{detailView>/button/visible/DeactivateDelete}",
 					type: "Default",
-					//press: this.catalog.onDeactivateDelete.bind(this),
+
 					enabled: "{= ${detailView>/table/selectedItemsCount} > 0 }",
 					press: this.onPressDeactivateDeleteButton.bind(this)
 				}),
 				new OverflowToolbarButton({
-					//id: "btnRestore",
+
 					icon: "{i18n>iRestore}",
 					type: "Default",
 					tooltip: "{i18n>ttRestore}",
 					text: "{i18n>ttRestore}",
-					//press: this.catalog.onRestore.bind(this),
+
 					visible: "{detailView>/button/visible/Restore}",
 					enabled: "{= ${detailView>/table/selectedItemsCount} > 0 && ${detailView>/button/pressed/ChangeVersionMode}}",
 					press: this.onPressDeactivateDeleteButton.bind(this)
@@ -247,12 +237,10 @@ sap.ui.define([
 				useTablePersonalisation: true,
 				showVariantManagement: true,
 				header: " ",
-
 				showRowCount: true,
 				enableAutoBinding: true,
 				showFullScreenButton: true,
 				visible: true,
-
 				beforeRebindTable: this._onBeforeRebindTable.bind(this),
 				customToolbar: new OverflowToolbar({
 					design: "Transparent",
@@ -273,12 +261,6 @@ sap.ui.define([
 			this.getModel("detailView").setProperty("/table/selectionMode", "Single");
 			this.getModel("detailView").setProperty("/button/pressed/ChangeSelectionMode", false);
 			this.getModel("detailView").setProperty("/button/pressed/ChangeVersionMode", false);
-
-			//this._oSmartTable.setCustomToolbar();
-
-			// aToolbarElements.forEach(function(oElement) {
-			// 	oToolbar.addContent(oElement);
-			// });
 
 			var oRowActionTemplate = new sap.ui.table.RowAction({
 				items: [
@@ -373,8 +355,8 @@ sap.ui.define([
 				.then(oDialog => {
 					debugger
 					this.getView().addDependent(oDialog);
-					
-					oDialog.setTitle(sMode.toUpperCase()+" " +this.getResourceBundle().getText("MasterTitle"));
+
+					oDialog.setTitle(sMode.toUpperCase() + " " + this.getResourceBundle().getText("MasterTitle"));
 					oDialog.setModel(this.getModel("detailView"));
 					this.getView().byId("label").setText(nameField);
 					this.getView().byId("input").bindProperty("value", {
@@ -386,8 +368,7 @@ sap.ui.define([
 				});
 		},
 		onCloseDialog: function() {
-			// note: We don't need to chain to the pDialog promise, since this event-handler
-			// is only called from within the loaded dialog itself.
+
 			this.byId("createDialog").close();
 		},
 
@@ -517,17 +498,14 @@ sap.ui.define([
 		},
 
 		_onMetadataLoaded: function() {
-			// Store original busy indicator delay for the detail view
+
 			var iOriginalViewBusyDelay = this.getView().getBusyIndicatorDelay(),
 				oViewModel = this.getModel("detailView");
 
-			// Make sure busy indicator is displayed immediately when
-			// detail view is displayed for the first time
 			oViewModel.setProperty("/delay", 0);
 
-			// Binding the view will set it to not busy - so the view is always busy if it is not bound
 			oViewModel.setProperty("/busy", true);
-			// Restore original busy indicator delay for the detail view
+
 			oViewModel.setProperty("/delay", iOriginalViewBusyDelay);
 		}
 
