@@ -1,13 +1,11 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
 	<Dialog id="createDialog" title="">
 		<VBox class="sapUiResponsiveMargin">
-			<Label id="label"  labelFor="" design="Bold"/>
-			<Input  id="input" value="{detailView>/dialog/inputValue}"/>
-		
-		
+			<Label id="label" labelFor="" design="Bold"/>
+			<Input id="input" value="{detailView>/dialog/inputValue}"/>
 		</VBox>
 		<buttons>
-			<Button type="Emphasized" text="{i18n>dialogSaveButtonText}"  press="onActionPress"/>
+			<Button type="Emphasized" text="{i18n>dialogSaveButtonText}" press="onActionPress"/>
 			<Button text="{i18n>dialogCancelButtonText}" press="onPressCancel"/>
 		</buttons>
 	</Dialog>

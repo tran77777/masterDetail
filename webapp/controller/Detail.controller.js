@@ -310,7 +310,7 @@ sap.ui.define([
 			} else {
 				var oModel = this.getOwnerComponent().getModel();
 				var infoMB = this.getView().getModel("i18n").getResourceBundle().getText("statusSuccess");
-				var sStatusSuccessi18n = this.getView().getModel("i18n").getResourceBundle().getText("deletionSuccessful");
+				var sStatusSuccessi18n = this.getView().getModel("i18n").getResourceBundle().getText("StatusSuccessful");
 				var sEntitySet = "/" + this._oSmartTable.getEntitySet();
 				var idField = this.getModel("detailView").getProperty("/dialog/idField");
 				var nameField = this.getModel("detailView").getProperty("/dialog/nameField");
@@ -371,8 +371,10 @@ sap.ui.define([
 					controller: this
 				})
 				.then(oDialog => {
-
+					debugger
 					this.getView().addDependent(oDialog);
+					
+					oDialog.setTitle(sMode.toUpperCase()+" " +this.getResourceBundle().getText("MasterTitle"));
 					oDialog.setModel(this.getModel("detailView"));
 					this.getView().byId("label").setText(nameField);
 					this.getView().byId("input").bindProperty("value", {
@@ -411,7 +413,7 @@ sap.ui.define([
 
 						this.getModel().submitChanges({
 							success: () => {
-								MessageToast.show(this.getResourceBundle().getText("deletionSuccessful"));
+								MessageToast.show(this.getResourceBundle().getText("StatusSuccessful"));
 								this._oTable.clearSelection();
 							}
 						});
@@ -422,7 +424,7 @@ sap.ui.define([
 		},
 		onRefreshTable: function() {
 			this._oSmartTable.rebindTable(true);
-			MessageToast.show(this.getResourceBundle().getText("deletionSuccessful"));
+			MessageToast.show(this.getResourceBundle().getText("StatusSuccessful"));
 		},
 		onPressOnChangeSelectMode: function(oEvent) {
 
@@ -470,7 +472,7 @@ sap.ui.define([
 
 			var a = [];
 			var sMessageTosti18n = this.getView().getModel("i18n").getResourceBundle().getText("messageTostSelectError");
-			var sdeletionSuccessfulStatus = this.getView().getModel("i18n").getResourceBundle().getText("deletionSuccessful");
+			var StatusSuccessful = this.getView().getModel("i18n").getResourceBundle().getText("StatusSuccessful");
 			var sDeletionErrorSelected = this.getView().getModel("i18n").getResourceBundle().getText("deletionErrorSelected");
 			for (var i = 0; i < index.length; i++) {
 				var oSelectedContexts = this._oTable.getContextByIndex(index[i])
@@ -484,12 +486,12 @@ sap.ui.define([
 				}.bind(this));
 				Promise.all(aPromise).then(function(aData) {
 					this._oTable.clearSelection();
-					sap.m.MessageBox.show(sdeletionSuccessfulStatus, {
+					sap.m.MessageBox.show(StatusSuccessful, {
 						icon: sap.m.MessageBox.Icon.SUCCESS,
 						title: this.getResourceBundle().getText("statusSuccess")
 					});
 				}).catch(function() {
-					sap.m.MessageBox.show(sdeletionSuccessfulStatus, {
+					sap.m.MessageBox.show(StatusSuccessful, {
 						icon: sap.m.MessageBox.Icon.SUCCESS,
 						title: this.getResourceBundle().getText("statusSuccess")
 					});
