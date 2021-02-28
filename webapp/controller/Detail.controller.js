@@ -252,7 +252,7 @@ sap.ui.define([
 			this._oTable.bindProperty("selectionMode", {
 				path: "detailView>/table/selectionMode"
 			});
-
+			this._oSmartTable.setHeader(this.getResourceBundle().getText("tableHeader"))
 			this._oTable.setSelectionMode("Single");
 			this._oTable.setSelectionBehavior("Row");
 			this._oTable.attachRowSelectionChange(this.onSelectionChange.bind(this));
@@ -347,7 +347,7 @@ sap.ui.define([
 				var sValueField = this.getView().getModel().getProperty(sPath)[nameField];
 				this.getModel("detailView").setProperty("/dialog/inputValue", sValueField);
 			}
-			sap.ui.core.Fragment.load({
+					Fragment.load({
 					id: oView.getId(),
 					name: "MySecondProject.MySecondProject.view.CreateDialog",
 					controller: this
@@ -356,7 +356,7 @@ sap.ui.define([
 					debugger
 					this.getView().addDependent(oDialog);
 
-					oDialog.setTitle(sMode.toUpperCase() + " " + this.getResourceBundle().getText("MasterTitle"));
+					oDialog.setTitle(sMode.toUpperCase() +" "+ this.getResourceBundle().getText("MasterTitle"));
 					oDialog.setModel(this.getModel("detailView"));
 					this.getView().byId("label").setText(nameField);
 					this.getView().byId("input").bindProperty("value", {
