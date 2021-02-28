@@ -337,7 +337,7 @@ sap.ui.define([
 
 		onPressCreateDialog: function(sPath, oEvent) {
 
-			var sPath = sPath;
+			var sPath =  sPath;
 			this.getModel("detailView").setProperty("/dialog/inputValue", "")
 			var oView = this.getView();
 			var sMode = this.getModel("detailView").getProperty("/dialog/mode");
